@@ -23,16 +23,19 @@ def basic_client
 end
 
 def token_client
-  res = basic_client.get 'api/security/apiKey'
-  res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
-
   client do |b|
-    b.basic_auth ENV['JFROG_USERNAME'], res.body['apiKey']
+    b.basic_auth ENV['JFROG_USERNAME'], api_key
   end
 end
 
+def api_key
+  res = basic_client.get 'api/security/apiKey'
+  res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
+  res.body['apiKey']
+end
+
 get '/key' do
-  basic_client.get('api/security/apiKey').body['apiKey']
+  api_key
 end
 
 delete '/key' do
