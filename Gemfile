@@ -6,6 +6,13 @@ gem 'faraday_middleware'
 gem 'puma'
 
 group :development do
+  gem 'rake'
   gem 'pry'
+  gem 'pry-doc'
   gem 'dotenv'
+  gem 'rack-test'
+  gem 'rspec'
+  gem 'webmock'
+  gem 'guard'
+  gem 'guard-rspec'
 end

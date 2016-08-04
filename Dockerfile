@@ -7,7 +7,7 @@ ADD Gemfile.lock /opt/Gemfile.lock
 RUN bundle install --path vendor/bundle --deployment --without development test
 
 ADD config.ru /opt/config.ru
-ADD app.rb /opt/app.rb
+ADD lib /opt/lib
 
 EXPOSE 9292
 
