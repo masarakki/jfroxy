@@ -11,13 +11,13 @@ end
 def client
   Faraday.new(url: ENV['JFROG_URL']) do |b|
     b.adapter Faraday.default_adapter
-    b.response :json, content_type: /json/
     yield b
   end
 end
 
 def basic_client
   client do |b|
+    b.response :json, content_type: /json/
     b.basic_auth ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']
   end
 end
@@ -31,15 +31,16 @@ def token_client
   end
 end
 
-get '/apiKey' do
+get '/key' do
   basic_client.get('api/security/apiKey').body['apiKey']
 end
 
-delete '/apiKey' do
+delete '/key' do
   basic_client.delete('api/security/apiKey').body.to_s
 end
 
 get '/api/*' do
   path = params['splat'].first
+  return [404, 'Not Found'] if path =~ /\Asecurity/
   token_client.get("api/#{path}").body
 end

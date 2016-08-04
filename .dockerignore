@@ -1,1 +1,5 @@
 .env
+spec
+Guardfile
+.travis.yml
+.rspec
