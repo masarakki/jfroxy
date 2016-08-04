@@ -25,7 +25,11 @@ proxy to https://foo.jfrog.io/foo/api/* with apiKey Authentication
 
 if you don't have apiKey, automatically create one.
 
-### DELETE /apiKey
+### GET /key
+
+get ApiKey
+
+### DELETE /key
 
 revoke ApiKey
 
