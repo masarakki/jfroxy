@@ -32,7 +32,7 @@ def token_client
 end
 
 get '/apiKey' do
-  basic_client.get('api/security/apiKey').body.to_s
+  basic_client.get('api/security/apiKey').body['apiKey']
 end
 
 delete '/apiKey' do
