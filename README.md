@@ -15,7 +15,7 @@ You can keep security with access control and regularly revoking api-key.
 
 or
 
-    docker run -e JFROG_URL=... -p 9292:9292 -d jfroxy
+    docker run -e JFROG_URL=... -p 80:80 -d masarakkijfroxy
 
 ## APIs
 
