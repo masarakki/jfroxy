@@ -9,6 +9,6 @@ RUN bundle install --path vendor/bundle --deployment --without development test
 ADD config.ru /opt/config.ru
 ADD lib /opt/lib
 
-EXPOSE 9292
+EXPOSE 80
 
-CMD rackup -o 0.0.0.0 -E production
+CMD rackup -o 0.0.0.0 -E production -p 80
