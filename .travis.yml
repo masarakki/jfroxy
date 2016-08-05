@@ -3,3 +3,9 @@ rvm: 2.3.1
 cache: bundler
 script:
   - bundle exec rake spec
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker build -t masarakki/jfroxy .;
+    docker push masarakki/jfroxy;
+    fi
