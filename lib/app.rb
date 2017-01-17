@@ -38,6 +38,10 @@ get '/key' do
   api_key
 end
 
+get '/encrypted_password' do
+  basic_client.get('api/security/encryptedPassword').body
+end
+
 delete '/key' do
   basic_client.delete('api/security/apiKey').body.to_s
 end

@@ -19,6 +19,7 @@ describe :App do
   let(:basic_auth) { base64(ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']) }
   let(:token_auth) { base64(ENV['JFROG_USERNAME'], token) }
   let(:token) { 'hello_world' }
+  let(:encrypted_password) { 'PASSWORD' }
 
   before do
     stub_request(:get, url('/api/security/apiKey')).
@@ -28,12 +29,26 @@ describe :App do
                 headers: {
                   'Content-Type' => 'application/json'
                 })
+    stub_request(:get, url('/api/security/encryptedPassword')).
+      with(headers: {'Authorization' => basic_auth}).
+      to_return(status: 200,
+                body: encrypted_password,
+                headers: {
+                  'Content-Type' => 'text/html'
+                })
   end
 
   describe 'GET /key' do
     it do
       get '/key'
       expect(last_response.body).to eq token
+    end
+  end
+
+  describe 'GET /encrypted_password' do
+    it do
+      get '/encrypted_password'
+      expect(last_response.body).to eq encrypted_password
     end
   end
 
