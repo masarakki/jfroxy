@@ -1,4 +1,4 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.3
 
 WORKDIR /opt
 ADD Gemfile /opt/Gemfile
