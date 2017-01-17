@@ -62,3 +62,7 @@ get ApiKey
 revoke ApiKey
 
 You **should** revoke api key regularly by cron.
+
+### GET /password
+
+get EncryptedPassword

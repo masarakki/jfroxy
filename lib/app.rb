@@ -34,8 +34,17 @@ def api_key
   res.body['apiKey']
 end
 
+def encrypted_password
+  res = basic_client.get 'api/security/encryptedPassword'
+  res.body
+end
+
 get '/key' do
   api_key
+end
+
+get '/password' do
+  encrypted_password
 end
 
 delete '/key' do
