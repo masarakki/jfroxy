@@ -3,7 +3,7 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 namespace :docker do
-  name = 'masarakki/jfrog'
+  name = 'masarakki/jfroxy'
 
   task :build do
     sh "docker build -t #{name} ."
