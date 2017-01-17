@@ -32,7 +32,7 @@ describe :App do
     stub_request(:get, url('/api/security/encryptedPassword')).
       with(headers: {'Authorization' => basic_auth}).
       to_return(status: 200,
-                body: encrypted_password.to_s,
+                body: encrypted_password,
                 headers: {
                   'Content-Type' => 'text/html'
                 })
@@ -45,9 +45,9 @@ describe :App do
     end
   end
 
-  describe 'GET /password' do
+  describe 'GET /encrypted_password' do
     it do
-      get '/password'
+      get '/encrypted_password'
       expect(last_response.body).to eq encrypted_password
     end
   end
