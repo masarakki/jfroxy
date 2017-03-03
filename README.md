@@ -43,7 +43,7 @@ In this case, you can satisfy your needs with jfroxy.
 
 or
 
-    docker run -e JFROG_URL=... -p 80:80 -d masarakkijfroxy
+    docker run -e JFROG_URL=... -p 80:80 -d masarakki/jfroxy
 
 ## APIs
 
