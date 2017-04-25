@@ -34,8 +34,13 @@ def api_key
   res.body['apiKey']
 end
 
+
 get '/key' do
   api_key
+end
+
+get '/username' do
+  ENV['JFROG_USERNAME']
 end
 
 get '/encrypted_password' do

@@ -38,6 +38,13 @@ describe :App do
                 })
   end
 
+  describe 'GET /usrname' do
+    it do
+      get '/username'
+      expect(last_response.body).to eq ENV['JFROG_USERNAME']
+    end
+  end
+
   describe 'GET /key' do
     it do
       get '/key'
