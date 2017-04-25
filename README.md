@@ -63,6 +63,10 @@ revoke ApiKey
 
 You **should** revoke api key regularly by cron.
 
+### GET /username
+
+get Username
+
 ### GET /encrypted_password
 
 get EncryptedPassword
