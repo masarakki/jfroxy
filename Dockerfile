@@ -1,10 +1,14 @@
-FROM ruby:2.3.3
+FROM ruby:2.5-alpine
 
 WORKDIR /opt
 ADD Gemfile /opt/Gemfile
 ADD Gemfile.lock /opt/Gemfile.lock
 
-RUN bundle install --path vendor/bundle --deployment --without development test
+RUN apk add --no-cache --update alpine-sdk &&\
+    gem update --system &&\
+    gem install bundler &&\
+    bundle install --path vendor/bundle --deployment --without development test &&\
+    apk del alpine-sdk
 
 ADD config.ru /opt/config.ru
 ADD lib /opt/lib
