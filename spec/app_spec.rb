@@ -38,6 +38,10 @@ describe :App do
                 })
   end
 
+  after(:each) do
+    $cache.clear
+  end
+
   describe 'GET /usrname' do
     it do
       get '/username'

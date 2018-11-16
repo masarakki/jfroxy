@@ -2,6 +2,8 @@ require 'sinatra'
 require 'faraday'
 require 'faraday_middleware'
 
+require_relative './cache'
+
 if ENV['RACK_ENV'] == 'development'
   require 'pry'
   require 'dotenv'
@@ -34,6 +36,9 @@ def api_key
   res.body['apiKey']
 end
 
+configure do
+  $cache = Cache::TTLCache.new
+end
 
 get '/key' do
   api_key
@@ -54,5 +59,7 @@ end
 get '/api/*' do
   path = params['splat'].first
   return [404, 'Not Found'] if path =~ /\Asecurity/
-  token_client.get("api/#{path}").body
+  $cache.with_cache(path) do
+    token_client.get("api/#{path}").body
+  end
 end

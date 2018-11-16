@@ -15,4 +15,5 @@ group :development do
   gem 'webmock'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'timecop'
 end
