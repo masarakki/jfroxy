@@ -15,4 +15,4 @@ ADD lib /opt/lib
 
 EXPOSE 80
 
-CMD rackup -o 0.0.0.0 -E production -p 80
+CMD bundle exec rackup -o 0.0.0.0 -E production -p 80
