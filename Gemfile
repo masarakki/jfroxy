@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'puma'
+gem 'redis-sinatra'
 
 group :development do
   gem 'rake'
