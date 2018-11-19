@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: masarakki/jfroxy
+    env_file:
+      - .env.production
+    ports:
+      - '80:80'
