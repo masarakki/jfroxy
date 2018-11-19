@@ -10,8 +10,9 @@ end
 
 def client
   Faraday.new(url: ENV['JFROG_URL']) do |b|
-    b.adapter Faraday.default_adapter
     yield b
+    b.response :raise_error
+    b.adapter Faraday.default_adapter
   end
 end
 
