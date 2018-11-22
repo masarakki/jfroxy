@@ -1,12 +1,17 @@
 require 'sinatra'
 require 'faraday'
 require 'faraday_middleware'
+require 'redis-sinatra'
+
+CACHE_API_KEY = 'api_key'
 
 if ENV['RACK_ENV'] == 'development'
   require 'pry'
   require 'dotenv'
   Dotenv.load
 end
+
+register Sinatra::Cache
 
 def client
   Faraday.new(url: ENV['JFROG_URL']) do |b|
@@ -30,11 +35,12 @@ def token_client
 end
 
 def api_key
-  res = basic_client.get 'api/security/apiKey'
-  res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
-  res.body['apiKey']
+  settings.cache.fetch(CACHE_API_KEY, ex: 60 * 30) do
+    res = basic_client.get 'api/security/apiKey'
+    res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
+    res.body['apiKey']
+  end
 end
-
 
 get '/key' do
   api_key
@@ -49,7 +55,9 @@ get '/encrypted_password' do
 end
 
 delete '/key' do
-  basic_client.delete('api/security/apiKey').body.to_s
+  res = basic_client.delete('api/security/apiKey')
+  settings.cache.delete(CACHE_API_KEY)
+  res.body.to_s
 end
 
 get '/api/*' do
