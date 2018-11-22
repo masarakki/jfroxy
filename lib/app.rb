@@ -1,9 +1,11 @@
 require 'sinatra'
+require 'fileutils'
 require 'faraday'
 require 'faraday_middleware'
 require 'redis-sinatra'
 
 CACHE_API_KEY = 'api_key'
+CACHE_MODIFIED_KEY = 'modified_at'
 
 if ENV['RACK_ENV'] == 'development'
   require 'pry'
@@ -12,6 +14,9 @@ if ENV['RACK_ENV'] == 'development'
 end
 
 register Sinatra::Cache
+before do
+  cache_control :public, max_age: 3600
+end
 
 def client
   Faraday.new(url: ENV['JFROG_URL']) do |b|
@@ -35,11 +40,16 @@ def token_client
 end
 
 def api_key
-  settings.cache.fetch(CACHE_API_KEY, ex: 60 * 30) do
+  settings.cache.fetch(CACHE_API_KEY, ex: 60 * 60) do
     res = basic_client.get 'api/security/apiKey'
     res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
     res.body['apiKey']
   end
+end
+
+def clear_cache
+  FileUtils.rm_r Dir.glob('.cache/meta/*')
+  FileUtils.rm_r Dir.glob('.cache/entity/*')
 end
 
 get '/key' do
@@ -57,6 +67,7 @@ end
 delete '/key' do
   res = basic_client.delete('api/security/apiKey')
   settings.cache.delete(CACHE_API_KEY)
+  clear_cache
   res.body.to_s
 end
 
