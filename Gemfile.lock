@@ -50,6 +50,8 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.3)
+    rack-cache (1.8.0)
+      rack (>= 0.4)
     rack-protection (2.0.0)
       rack
     rack-test (0.8.2)
@@ -105,6 +107,7 @@ DEPENDENCIES
   pry
   pry-doc
   puma
+  rack-cache
   rack-test
   rake
   redis-sinatra
@@ -113,4 +116,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.16.2
+   1.16.6
