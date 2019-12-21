@@ -4,7 +4,5 @@ rvm:
 cache: bundler
 services:
   - redis-server
-before_install:
-  - gem update --system
 script:
   - bundle exec rake spec
