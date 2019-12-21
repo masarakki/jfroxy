@@ -1,8 +1,0 @@
-language: ruby
-rvm:
-  - 2.6
-cache: bundler
-services:
-  - redis-server
-script:
-  - bundle exec rake spec
