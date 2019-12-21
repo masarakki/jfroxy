@@ -1,0 +1,16 @@
+name: Docker Push
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag masarakki/jfroxy:latest
+    - name: Login DockerHub
+      run: docker login --username masarakki --password ${{ secrets.DOCKER_ACCESS_TOKEN }}
+    - name: Push the Docker image
+      run: docker push masarakki/jfroxy:latest
