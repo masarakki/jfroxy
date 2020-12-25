@@ -97,7 +97,7 @@ GEM
     yard (0.9.25)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   dotenv
@@ -117,4 +117,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.1.4
+   2.2.3
