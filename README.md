@@ -5,31 +5,31 @@ You can keep security with access control and regularly revoking api-key.
 
 ## Features
 
-jfroxy is a proxy for jfrog api,
+jfroxy is a proxy for JFrog's APIs, allowing you to hide your jfrog account password by accessing APIs with a token, **not** the password.  Each token is revokable, and there are no access controls.
 
-- hide jfrog password
-- convert any access to token-authed access (**not** password-authed access)
-- token is revokable
-- no access control
+Basically:
+
+- Hide your JFrog password
+- Access APIs with a revokable token
+- Do not control access
 
 ## Example
 
-JFrog requires authenticated request for APIs,
-however, there are some cases that you don't want to write auth informations.
+JFrog requires that API requests be authenticated.  However, there are some cases where you would not want such auth info to be recorded.
 
-For example, in a case of testing on CI, you have some problems like this:
+For example, when testing with a CI, you might have such problems as:
 
-- You want to use **shared, non-human** account, becase human will leave job someday.
-- Of cource, you don't write password in build script.
-- You want to change auth informations after someone left job, because if ex-worker write down it, they can access jfrog with it.
-- But, you **never** want to edit anything after auth infomation changed, because **WE ARE LAZY**.
+- Using **shared, non-human** credentials (because humans might leave the company)
+- Removing passwords from build scripts (of course)
+- Changing auth info after employee has left company (they could have brought it away with them)
+- Decoupling auth info from everything else, because **WE ARE LAZY** and **never** want to change anything when possible
 
-In this case, you can satisfy your needs with jfroxy.
+These needs can be satisfied with jfroxy by:
 
-- Run jfroxy with shared, non-human account/password.
-- Configure web server/load balancer in front of jfroxy that only passes requests from your office.
-- Configure cron to revoke token every morning.
-- Fetch auth infomation from jproxy **every time** before a build.
+- Running jfroxy with shared, non-human credentials
+- Configuring web server/load balancer in front of jfroxy to only pass requests from your office gateway
+- Setting up a cron job to revoke token every morning
+- Fetching auth info from jproxy prior to **each and every** build
 
 ## ENV
 
