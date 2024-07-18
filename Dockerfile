@@ -1,4 +1,5 @@
-FROM ruby:2.7-alpine
+ARG RUBY_VERSION
+FROM ruby:${RUBY_VERSION}-alpine
 
 WORKDIR /opt
 ADD Gemfile /opt/Gemfile
