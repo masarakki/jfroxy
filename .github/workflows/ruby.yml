@@ -9,13 +9,8 @@ jobs:
         ports:
           - 6379:6379
     steps:
-    - uses: actions/checkout@v1
-    - name: setup ruby
-      uses: actions/setup-ruby@v1
+    - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
-    - name: rake spec
-      run: |
-        gem install bundler
-        bundle install --jobs 4 --retry 3
-        bundle exec rake spec
+        bundler-cache: true
+    - run:  bundle exec rake spec
