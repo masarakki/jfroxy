@@ -4,6 +4,5 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag masarakki/jfroxy:$(date +%s)
+      - uses: actions/checkout@v4
+      - run: docker build . --build-arg RUBY_VERSION=`cat .ruby-version`
