@@ -10,7 +10,7 @@ GEM
       bigdecimal
       rexml
     diff-lcs (1.5.1)
-    dotenv (2.8.1)
+    dotenv (3.1.2)
     faraday (2.8.1)
       base64
       faraday-net_http (>= 2.0, < 3.1)
