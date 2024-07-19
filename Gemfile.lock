@@ -103,7 +103,17 @@ GEM
     yard (0.9.36)
 
 PLATFORMS
+  aarch64-linux-gnu
+  aarch64-linux-musl
+  arm-linux-gnu
+  arm-linux-musl
+  arm64-darwin
   ruby
+  x86-linux-gnu
+  x86-linux-musl
+  x86_64-darwin
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   dotenv
@@ -122,4 +132,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.1.4
+   2.5.11
