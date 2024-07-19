@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'fileutils'
 require 'faraday'
-require 'faraday_middleware'
 require 'redis-sinatra'
 
 CACHE_API_KEY = 'api_key'
@@ -29,13 +28,13 @@ end
 def basic_client
   client do |b|
     b.response :json, content_type: /json/
-    b.basic_auth ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']
+    b.request :authorization, :basic, ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']
   end
 end
 
 def token_client
   client do |b|
-    b.basic_auth ENV['JFROG_USERNAME'], api_key
+    b.request :authorization, :basic, ENV['JFROG_USERNAME'], api_key
   end
 end
 
