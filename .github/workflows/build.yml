@@ -5,7 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: docker build . --build-arg RUBY_VERSION=`cat .ruby-version`
+      - uses: ./.github/actions/read-ruby-version
+      - uses: docker/build-push-action@v6
+        with:
+          push: false
+          build-args: |
+            RUBY_VERSION=${{ env.RUBY_VERSION }}
   rspec:
     runs-on: ubuntu-latest
     services:
