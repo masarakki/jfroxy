@@ -129,6 +129,8 @@ GEM
       unicode-display_width (>= 2.4.0, < 4.0)
     rubocop-ast (1.37.0)
       parser (>= 3.3.1.0)
+    rubocop-rspec (3.3.0)
+      rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     shellany (0.0.1)
@@ -178,6 +180,7 @@ DEPENDENCIES
   rspec
   rspec-its
   rubocop
+  rubocop-rspec
   sinatra
   webmock
 
