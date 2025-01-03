@@ -3,7 +3,7 @@
 require 'sinatra'
 require 'fileutils'
 require 'faraday'
-require 'redis-sinatra'
+require 'redis'
 
 CACHE_API_KEY = 'api_key'
 CACHE_MODIFIED_KEY = 'modified_at'
@@ -14,9 +14,21 @@ if ENV['RACK_ENV'] == 'development'
   Dotenv.load
 end
 
-register Sinatra::Cache
 before do
   cache_control :public, max_age: 3600
+end
+
+def redis
+  @redis ||= Redis.new
+end
+
+def fetch(key, ex: nil) # rubocop:disable Naming/MethodParameterName
+  value = redis.get(key)
+  return value if value
+
+  value = yield
+  redis.set(key, value, ex:)
+  value
 end
 
 def client
@@ -41,7 +53,7 @@ def token_client
 end
 
 def api_key
-  settings.cache.fetch(CACHE_API_KEY, ex: 60 * 60) do
+  fetch(CACHE_API_KEY, ex: 60 * 60) do
     res = basic_client.get 'api/security/apiKey'
     res = basic_client.post 'api/security/apiKey' unless res.body['apiKey']
     res.body['apiKey']
@@ -67,7 +79,7 @@ end
 
 delete '/key' do
   res = basic_client.delete('api/security/apiKey')
-  settings.cache.delete(CACHE_API_KEY)
+  redis.del CACHE_API_KEY
   clear_cache
   res.body.to_s
 end

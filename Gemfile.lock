@@ -7,6 +7,7 @@ GEM
     base64 (0.2.0)
     bigdecimal (3.1.9)
     coderay (1.1.3)
+    connection_pool (2.4.1)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -98,12 +99,10 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    redis (4.2.5)
-    redis-sinatra (1.4.2)
-      redis-store (>= 1.1, < 2)
-      sinatra (>= 1, < 3)
-    redis-store (1.9.0)
-      redis (>= 4, < 5)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.23.0)
+      connection_pool
     regexp_parser (2.10.0)
     rexml (3.4.0)
     rspec (3.13.0)
@@ -185,7 +184,7 @@ DEPENDENCIES
   rack-cache
   rack-test
   rake
-  redis-sinatra
+  redis
   rspec
   rspec-its
   rubocop

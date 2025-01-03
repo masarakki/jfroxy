@@ -3,6 +3,7 @@
 require 'spec_helper'
 require 'base64'
 require 'uri'
+require 'redis'
 
 describe 'App' do
   def app
@@ -18,6 +19,8 @@ describe 'App' do
     [ENV.fetch('JFROG_URL', nil), path].join
   end
 
+  def redis = Redis.new
+
   subject { last_response }
 
   let(:basic_auth) { base64(ENV.fetch('JFROG_USERNAME', nil), ENV.fetch('JFROG_PASSWORD', nil)) }
@@ -26,6 +29,7 @@ describe 'App' do
   let(:encrypted_password) { 'PASSWORD' }
 
   before do
+    redis.del 'api_key'
     stub_request(:get, url('/api/security/apiKey'))
       .with(headers: { 'Authorization' => basic_auth })
       .to_return(status: 200,
