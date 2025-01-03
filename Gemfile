@@ -18,6 +18,7 @@ group :development do
   gem 'rack-test'
   gem 'rake'
   gem 'rspec'
+  gem 'rspec-its', require: false
   gem 'rubocop', require: false
   gem 'webmock'
 end
