@@ -16,4 +16,6 @@ group :development do
   gem 'webmock'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'rubocop', require: false
+  gem 'guard-rubocop'
 end
