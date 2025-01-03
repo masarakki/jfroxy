@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'fileutils'
 require 'faraday'
@@ -18,7 +20,7 @@ before do
 end
 
 def client
-  Faraday.new(url: ENV['JFROG_URL']) do |b|
+  Faraday.new(url: ENV.fetch('JFROG_URL', nil)) do |b|
     yield b
     b.response :raise_error
     b.adapter Faraday.default_adapter
@@ -28,13 +30,13 @@ end
 def basic_client
   client do |b|
     b.response :json, content_type: /json/
-    b.request :authorization, :basic, ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']
+    b.request :authorization, :basic, ENV.fetch('JFROG_USERNAME', nil), ENV.fetch('JFROG_PASSWORD', nil)
   end
 end
 
 def token_client
   client do |b|
-    b.request :authorization, :basic, ENV['JFROG_USERNAME'], api_key
+    b.request :authorization, :basic, ENV.fetch('JFROG_USERNAME', nil), api_key
   end
 end
 
@@ -56,7 +58,7 @@ get '/key' do
 end
 
 get '/username' do
-  ENV['JFROG_USERNAME']
+  ENV.fetch('JFROG_USERNAME', nil)
 end
 
 get '/encrypted_password' do
@@ -73,5 +75,6 @@ end
 get '/api/*' do
   path = params['splat'].first
   return [404, 'Not Found'] if path =~ /\Asecurity/
+
   token_client.get("api/#{path}").body
 end

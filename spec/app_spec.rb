@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'base64'
 require 'uri'
@@ -13,35 +15,35 @@ describe :App do
   end
 
   def url(path)
-    [ENV['JFROG_URL'], path].join
+    [ENV.fetch('JFROG_URL', nil), path].join
   end
 
-  let(:basic_auth) { base64(ENV['JFROG_USERNAME'], ENV['JFROG_PASSWORD']) }
-  let(:token_auth) { base64(ENV['JFROG_USERNAME'], token) }
+  let(:basic_auth) { base64(ENV.fetch('JFROG_USERNAME', nil), ENV.fetch('JFROG_PASSWORD', nil)) }
+  let(:token_auth) { base64(ENV.fetch('JFROG_USERNAME', nil), token) }
   let(:token) { 'hello_world' }
   let(:encrypted_password) { 'PASSWORD' }
 
   before do
-    stub_request(:get, url('/api/security/apiKey')).
-      with(headers: {'Authorization' => basic_auth}).
-      to_return(status: 200,
-                body: { apiKey: token }.to_json,
-                headers: {
-                  'Content-Type' => 'application/json'
-                })
-    stub_request(:get, url('/api/security/encryptedPassword')).
-      with(headers: {'Authorization' => basic_auth}).
-      to_return(status: 200,
-                body: encrypted_password,
-                headers: {
-                  'Content-Type' => 'text/html'
-                })
+    stub_request(:get, url('/api/security/apiKey'))
+      .with(headers: { 'Authorization' => basic_auth })
+      .to_return(status: 200,
+                 body: { apiKey: token }.to_json,
+                 headers: {
+                   'Content-Type' => 'application/json'
+                 })
+    stub_request(:get, url('/api/security/encryptedPassword'))
+      .with(headers: { 'Authorization' => basic_auth })
+      .to_return(status: 200,
+                 body: encrypted_password,
+                 headers: {
+                   'Content-Type' => 'text/html'
+                 })
   end
 
   describe 'GET /usrname' do
     it do
       get '/username'
-      expect(last_response.body).to eq ENV['JFROG_USERNAME']
+      expect(last_response.body).to eq ENV.fetch('JFROG_USERNAME', nil)
     end
   end
 
@@ -61,9 +63,9 @@ describe :App do
 
   describe 'DELETE /key' do
     it do
-      stub_request(:delete, url('/api/security/apiKey')).
-        with(headers: { 'Authorization'=> basic_auth }).
-        to_return(status: 200, body: '')
+      stub_request(:delete, url('/api/security/apiKey'))
+        .with(headers: { 'Authorization' => basic_auth })
+        .to_return(status: 200, body: '')
       delete '/key'
     end
   end
@@ -72,9 +74,9 @@ describe :App do
     context 'text/plain' do
       let(:body) { '@jfrog:repository=hello' }
       it do
-        stub_request(:get, url('/api/npm/npm/auth/jfrog')).
-          with(headers: { 'Authorization' => token_auth }).
-          to_return(status: 200, body: body)
+        stub_request(:get, url('/api/npm/npm/auth/jfrog'))
+          .with(headers: { 'Authorization' => token_auth })
+          .to_return(status: 200, body: body)
         get '/api/npm/npm/auth/jfrog'
         expect(last_response.status).to eq 200
         expect(last_response.body).to eq body
@@ -84,19 +86,17 @@ describe :App do
     context 'application/json' do
       let(:body) { { hello: 'world' }.to_json }
       it do
-        stub_request(:get, url('/api/npm/npm/auth/jfrog')).
-          with(headers: { 'Authorization' => token_auth }).
-          to_return(status: 200, body: body, headers: {
-                      'Content-Type' => 'application/json'
-                    })
+        stub_request(:get, url('/api/npm/npm/auth/jfrog'))
+          .with(headers: { 'Authorization' => token_auth })
+          .to_return(status: 200, body: body, headers: {
+                       'Content-Type' => 'application/json'
+                     })
         get '/api/npm/npm/auth/jfrog'
         expect(last_response.status).to eq 200
         expect(last_response.body).to eq body
       end
-
     end
   end
-
 
   describe 'GET /api/security/*' do
     it do

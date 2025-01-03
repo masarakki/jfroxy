@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'rack/test'
 require 'webmock/rspec'
 
 ENV['RACK_ENV'] = 'test'
-$LOAD_PATH.unshift File.expand_path('../../', __FILE__)
+$LOAD_PATH.unshift File.expand_path('..', __dir__)
 require 'app'
 
 ENV['JFROG_URL'] = 'https://dummy.jfrog.io/dummy'
