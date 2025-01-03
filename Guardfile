@@ -15,7 +15,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
   dsl.watch_spec_files_for(ruby.lib_files)
 end
 
-guard :rubocop, all_on_start: false, cli: '-A --except Lint/Debugger' do
+guard :rubocop, all_on_start: false, cli: '-A --except Lint/Debugger --except RSpec/EmptyExampleGroup' do
   watch(/.+\.rb$/)
   watch 'Gemfile'
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
