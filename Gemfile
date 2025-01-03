@@ -1,21 +1,21 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
 gem 'faraday'
 gem 'puma'
 gem 'rack-cache'
 gem 'redis-sinatra'
+gem 'sinatra'
 
 group :development do
-  gem 'rake'
-  gem 'pry'
-  gem 'pry-doc'
   gem 'dotenv'
-  gem 'rack-test'
-  gem 'rspec'
-  gem 'webmock'
   gem 'guard'
   gem 'guard-rspec'
-  gem 'rubocop', require: false
   gem 'guard-rubocop', require: false
+  gem 'pry'
+  gem 'pry-doc'
+  gem 'rack-test'
+  gem 'rake'
+  gem 'rspec'
+  gem 'rubocop', require: false
+  gem 'webmock'
 end
