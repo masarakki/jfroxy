@@ -11,6 +11,7 @@ gem 'sinatra'
 group :development do
   gem 'dotenv'
   gem 'guard'
+  gem 'guard-bundler', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop', require: false
   gem 'pry'
