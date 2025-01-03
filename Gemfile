@@ -9,6 +9,7 @@ gem 'redis-sinatra'
 gem 'sinatra'
 
 group :development do
+  gem 'base64'
   gem 'dotenv'
   gem 'guard'
   gem 'guard-bundler', require: false
