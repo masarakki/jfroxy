@@ -12,7 +12,7 @@ GEM
       bigdecimal
       rexml
     diff-lcs (1.5.1)
-    dotenv (3.1.8)
+    dotenv (3.2.0)
     faraday (2.14.0)
       faraday-net_http (>= 2.0, < 3.5)
       json
