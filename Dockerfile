@@ -1,13 +1,15 @@
 ARG RUBY_VERSION
-FROM ruby:${RUBY_VERSION}-alpine
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim
+
+RUN apt update && \
+    apt install -y build-essential && \
+    apt autoremove -y && apt clean
 
 WORKDIR /opt
 ADD Gemfile /opt/Gemfile
 ADD Gemfile.lock /opt/Gemfile.lock
 
-RUN apk add --no-cache --update alpine-sdk &&\
-    bundle install --path vendor/bundle --deployment --without development test &&\
-    apk del alpine-sdk
+RUN bundle install --path vendor/bundle --deployment --without development test
 
 ADD config.ru /opt/config.ru
 ADD lib /opt/lib
