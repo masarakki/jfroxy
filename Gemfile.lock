@@ -88,7 +88,7 @@ GEM
       pry (~> 0.11)
       yard (~> 0.9.11)
     public_suffix (6.0.2)
-    puma (7.1.0)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.3)
