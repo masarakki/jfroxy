@@ -6,10 +6,15 @@ RUN apt update && \
     apt autoremove -y && apt clean
 
 WORKDIR /opt
+
+ENV BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/opt/vendor/bundle" \
+    BUNDLE_WITHOUT="development test"
+
 ADD Gemfile /opt/Gemfile
 ADD Gemfile.lock /opt/Gemfile.lock
 
-RUN bundle install --path vendor/bundle --deployment --without development test
+RUN bundle install
 
 ADD config.ru /opt/config.ru
 ADD lib /opt/lib
