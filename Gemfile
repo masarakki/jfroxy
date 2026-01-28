@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gem 'faraday'
 gem 'puma'
 gem 'rack-cache'
+gem 'rackup'
 gem 'redis'
 gem 'sinatra'
 
