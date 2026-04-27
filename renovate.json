@@ -1,6 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:best-practices",
+    ":separateMajorReleases",
+    ":dependencyDashboard",
+    ":rebaseStalePrs"
+  ],
+  "rangeStrategy": "pin",
+  "assignees": ["masarakki"],
+  "reviewers": ["masarakki"],
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "matchUpgradeTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    }
+  ],
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "groupName": "security-updates",
+    "addLabels": ["security"],
+    "minimumReleaseAge": null,
+    "automerge": true
+  }
 }
