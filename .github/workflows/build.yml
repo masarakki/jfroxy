@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     services:
       redis:
-        image: redis@sha256:2838d5524559494f6f1cd66e97e76b200d64a633a8614200620755ed395daf32
+        image: redis@sha256:234c902a2db49461a129e2d4aeff85b28cf20187ed274a67f6e50995fa713c7b
         ports:
           - 6379:6379
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9 # v1.316.0
+      - uses: ruby/setup-ruby@003a5c4d8d6321bd302e38f6f0ec593f77f06600 # v1.319.0
         with:
           bundler-cache: true
       - run: bundle exec rake spec
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9 # v1.316.0
+      - uses: ruby/setup-ruby@003a5c4d8d6321bd302e38f6f0ec593f77f06600 # v1.319.0
         with:
           bundler-cache: true
       - run: bundle exec rubocop
